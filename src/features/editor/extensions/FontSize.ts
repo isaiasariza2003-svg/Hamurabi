@@ -1,0 +1,43 @@
+import { Extension } from '@tiptap/core'
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    fontSize: {
+      setFontSize: (size: string) => ReturnType
+      unsetFontSize: () => ReturnType
+    }
+  }
+}
+
+/** Tamaño de fuente sobre el mark textStyle, p. ej. "14pt". */
+export const FontSize = Extension.create({
+  name: 'fontSize',
+
+  addGlobalAttributes() {
+    return [
+      {
+        types: ['textStyle'],
+        attributes: {
+          fontSize: {
+            default: null,
+            parseHTML: (el) => el.style.fontSize || null,
+            renderHTML: (attrs) => (attrs.fontSize ? { style: `font-size: ${attrs.fontSize}` } : {}),
+          },
+        },
+      },
+    ]
+  },
+
+  addCommands() {
+    return {
+      setFontSize:
+        (size) =>
+        ({ chain }) =>
+          chain().setMark('textStyle', { fontSize: size }).run(),
+      unsetFontSize:
+        () =>
+        ({ chain }) =>
+          chain().setMark('textStyle', { fontSize: null }).removeEmptyTextStyle().run(),
+    }
+  },
+})

@@ -1,0 +1,925 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --text: #1d2330;
+  --muted: #6b7280;
+  --border: #d9dde5;
+  --accent: #2f5bd3;
+  --danger: #c0392b;
+  --tag-bg: #e6edff;
+  --tag-text: #1d3f9e;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #14171f;
+    --surface: #1d222d;
+    --text: #e6e9f0;
+    --muted: #9aa3b2;
+    --border: #2f3644;
+    --accent: #6d8cff;
+    --tag-bg: #26335a;
+    --tag-text: #bcd0ff;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #14171f;
+  --surface: #1d222d;
+  --text: #e6e9f0;
+  --muted: #9aa3b2;
+  --border: #2f3644;
+  --accent: #6d8cff;
+  --tag-bg: #26335a;
+  --tag-text: #bcd0ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 0.5rem;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  width: 100%;
+}
+
+button {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button.ghost,
+.button-link.ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+button.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+button.accent {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-color: var(--tag-bg);
+}
+
+.button-link {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  background: var(--accent);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.center {
+  text-align: center;
+  padding: 3rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.actions.end {
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+
+label.check {
+  flex-direction: row;
+  align-items: center;
+}
+
+label.check input {
+  width: auto;
+}
+
+/* Layout general */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar {
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.main-nav a {
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.main-nav a:hover {
+  color: var(--text);
+}
+
+.main-nav a.active {
+  color: var(--accent);
+  background: var(--tag-bg);
+}
+
+.user-box {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.page {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 0 16px;
+}
+
+.page.wide {
+  max-width: 1200px;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.page-head h2 {
+  margin: 0;
+}
+
+.search,
+.filters {
+  margin-bottom: 0.75rem;
+}
+
+/* Tablas de administración */
+.table-wrap {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr.dimmed td {
+  opacity: 0.6;
+}
+
+.table .badge {
+  margin-left: 0.4rem;
+}
+
+.actions.end-row {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.actions.end-row button,
+.actions.end-row .button-link {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.9rem;
+}
+
+.status {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+}
+
+.status.ok {
+  background: #e3f5e8;
+  color: #1e7a3c;
+}
+
+.status.off {
+  background: #fde8e6;
+  color: var(--danger);
+  margin-left: 0.4rem;
+}
+
+.status.warn {
+  background: #fdf3dc;
+  color: #8a5a00;
+}
+
+button.link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Login */
+.login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Editor */
+.editor-page,
+.generate-page {
+  padding: 0.75rem 16px 2rem;
+}
+
+.editor-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.name-input {
+  flex: 1;
+  min-width: 200px;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.toolbar .group {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding-right: 0.5rem;
+  border-right: 1px solid var(--border);
+}
+
+.toolbar .group:last-child {
+  border-right: none;
+}
+
+.toolbar button {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  padding: 0.3rem 0.6rem;
+}
+
+.toolbar button.on {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.toolbar button.accent {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-color: var(--tag-bg);
+}
+
+.toolbar select {
+  width: auto;
+  padding: 0.3rem 0.4rem;
+}
+
+.toolbar .color {
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  gap: 0.2rem;
+}
+
+.toolbar .color input {
+  width: 2rem;
+  height: 1.8rem;
+  padding: 0;
+}
+
+.canvas {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+  background: #d8dce4;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .canvas {
+    background: #0c0e13;
+  }
+}
+
+:root[data-theme='dark'] .canvas {
+  background: #0c0e13;
+}
+
+/* Hoja. Medidas reales en pulgadas: carta 8.5×11, oficio 8.5×14. */
+.sheet {
+  width: 8.5in;
+  max-width: 100%;
+  min-height: 11in;
+  /* El padding (márgenes) lo pone el componente Sheet según la tablilla. */
+  background: #fff;
+  color: #111;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  font-family: 'Times New Roman', serif;
+  font-size: 12pt;
+}
+
+.sheet.legal {
+  min-height: 14in;
+}
+
+.sheet .ProseMirror {
+  outline: none;
+  min-height: 100%;
+  /* Paradas de tabulación cada 1,25 cm desde el inicio del párrafo (TAB_STOP en toPdfmake.ts). */
+  tab-size: 1.25cm;
+}
+
+/* Tablas. Relleno y bordes iguales a CELL_PAD_* y CELL_BORDER en toPdfmake.ts. */
+.sheet .tableWrapper {
+  overflow-x: auto;
+  margin: 0 0 6pt;
+}
+
+.sheet table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0 0 6pt;
+}
+
+.sheet .tableWrapper table {
+  margin: 0;
+}
+
+.sheet td,
+.sheet th {
+  border: 1px solid #000;
+  padding: 3pt 4.5pt;
+  vertical-align: top;
+  text-align: left;
+  position: relative;
+  min-width: 1em;
+}
+
+.sheet th {
+  font-weight: bold;
+  background: #f2f2f2;
+}
+
+.sheet .ProseMirror td p,
+.sheet .ProseMirror th p {
+  margin: 0;
+}
+
+/* Sin bordes: invisibles en el PDF; en el editor, una guía tenue para ver las celdas. */
+.sheet table[data-bordered='false'] td,
+.sheet table[data-bordered='false'] th {
+  border-color: transparent;
+}
+
+.sheet.editing table[data-bordered='false'] td,
+.sheet.editing table[data-bordered='false'] th {
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.sheet .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 91, 211, 0.15);
+  pointer-events: none;
+}
+
+.sheet .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.sheet .ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+.toolbar .table-tools {
+  flex-basis: 100%;
+  border-right: none;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Imágenes: ancho en % del área útil y alineación, como en el PDF. */
+.image-block {
+  display: flex;
+  margin: 0 0 6pt;
+}
+
+.image-block.left,
+.image-preview.left {
+  justify-content: flex-start;
+}
+
+.image-block.center,
+.image-preview.center {
+  justify-content: center;
+}
+
+.image-block.right,
+.image-preview.right {
+  justify-content: flex-end;
+}
+
+.image-block img {
+  display: block;
+  height: auto;
+}
+
+.sheet.editing .image-block img {
+  cursor: pointer;
+}
+
+.ProseMirror-selectednode.image-block img {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.image-preview {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.image-preview img {
+  display: block;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+/* Mismas medidas que src/core/pdf/toPdfmake.ts, para que la vista previa y el PDF coincidan. */
+.sheet {
+  line-height: 1.4;
+}
+
+.sheet .ProseMirror p,
+.sheet .ProseMirror h1,
+.sheet .ProseMirror h2,
+.sheet .ProseMirror h3 {
+  margin: 0 0 6pt;
+}
+
+.sheet .ProseMirror h1 {
+  font-size: 24pt;
+}
+
+.sheet .ProseMirror h2 {
+  font-size: 18pt;
+}
+
+.sheet .ProseMirror h3 {
+  font-size: 14pt;
+}
+
+.tag-chip {
+  display: inline-block;
+  padding: 0 0.3em;
+  border-radius: 4px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-family: system-ui, sans-serif;
+  font-size: 0.85em;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Guía del área útil (dentro de los márgenes); solo en el editor, no en la vista previa. */
+.sheet.editing .ProseMirror {
+  outline: 1px dashed rgba(0, 0, 0, 0.18);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85em;
+}
+
+.warn {
+  color: #b7791f;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Editor con panel de etiquetas */
+.editor-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.fields-panel {
+  position: sticky;
+  top: 4rem;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+
+.fields-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.fields-head h3 {
+  margin: 0;
+}
+
+.fields-head button {
+  padding: 0.25rem 0.6rem;
+}
+
+.fields-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fields-list li {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.fields-list li.open {
+  border-color: var(--accent);
+}
+
+.field-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+}
+
+.field-name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.field-name strong,
+.field-name code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-name code {
+  color: var(--muted);
+}
+
+.field-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.field-body {
+  padding: 0 0.6rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.format-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.format-chip {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid transparent;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+}
+
+.format-chip:hover {
+  border-color: var(--accent);
+}
+
+.format-chip .muted {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fields-panel .actions button {
+  padding: 0.25rem 0.6rem;
+}
+
+.fields-panel .hint {
+  margin: 0.75rem 0 0;
+}
+
+@media (max-width: 1100px) {
+  .editor-body {
+    grid-template-columns: 1fr;
+  }
+  .fields-panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* Diálogo de márgenes */
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.margins-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 0.75rem;
+}
+
+/* Generación */
+.generate-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.form-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+/* Vista previa de generar: el PDF real, a todo el ancho de su columna. */
+.pdf-preview-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.pdf-preview {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 560px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #d8dce4;
+}
+
+.pdf-preview-status {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .generate-layout {
+    grid-template-columns: 1fr;
+  }
+  .form-panel {
+    position: static;
+  }
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  padding: 16px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* API */
+.api-docs {
+  margin-top: 24px;
+}
+
+.api-docs h3:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
+.api-docs .table {
+  margin: 0.75rem 0;
+}
+
+.code-sample {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.code-sample.token {
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.95rem;
+}
