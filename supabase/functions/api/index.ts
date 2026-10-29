@@ -2,7 +2,10 @@
 // por eso se despliega con verify_jwt = false. Cada token solo ve las tablillas de su dueño.
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts'
 import { createClient } from 'npm:@supabase/supabase-js@2'
-import pdfMake from 'npm:pdfmake@0.3.13/build/pdfmake.js'
+// Build de servidor de pdfmake. El de navegador descomprime los PNG con Web Workers, que Deno
+// no tiene (ReferenceError: Worker is not defined), así que cualquier tablilla con imagen PNG fallaba.
+import pdfMake from 'npm:pdfmake@0.3.13/js/index.js'
+// Solo para medir el texto (tabulaciones): los datos de métricas de las fuentes estándar.
 import courier from 'npm:pdfmake@0.3.13/build/standard-fonts/Courier.js'
 import helvetica from 'npm:pdfmake@0.3.13/build/standard-fonts/Helvetica.js'
 import times from 'npm:pdfmake@0.3.13/build/standard-fonts/Times.js'
@@ -25,7 +28,19 @@ const CORS = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 }
 
-for (const font of [times, helvetica, courier]) pdfMake.addFontContainer(font)
+// Fuentes estándar del PDF (incluidas en el build de servidor, no requieren archivos).
+pdfMake.fonts = {
+  Times: { normal: 'Times-Roman', bold: 'Times-Bold', italics: 'Times-Italic', bolditalics: 'Times-BoldItalic' },
+  Helvetica: { normal: 'Helvetica', bold: 'Helvetica-Bold', italics: 'Helvetica-Oblique', bolditalics: 'Helvetica-BoldOblique' },
+  Courier: { normal: 'Courier', bold: 'Courier-Bold', italics: 'Courier-Oblique', bolditalics: 'Courier-BoldOblique' },
+}
+// Las tablillas no cargan recursos externos: solo imágenes incrustadas (data URL).
+pdfMake.setUrlAccessPolicy(() => false)
+// pdfmake trata los nombres de fuente como rutas locales: solo se permiten las estándar.
+const STANDARD_FONTS = new Set(
+  Object.values(pdfMake.fonts as Record<string, Record<string, string>>).flatMap((f) => Object.values(f)),
+)
+pdfMake.setLocalAccessPolicy((path: string) => STANDARD_FONTS.has(path))
 // Mide el texto con las mismas métricas que pdfmake, para alinear las tabulaciones.
 const measure = createMeasurer([times, helvetica, courier])
 
